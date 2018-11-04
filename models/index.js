@@ -1,6 +1,6 @@
 
 module.exports = {
-    Article: require("./Article"),
+    Article: require(__dirname + "/Article"),
     Saved: require("./Saved")
   };
   
