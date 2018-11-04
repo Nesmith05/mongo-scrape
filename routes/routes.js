@@ -8,7 +8,7 @@ router.get('/favicon.ico', function(req,res) { res.status(204)});
 
 router.get("/", function(req,res){
     db.Article.find({}).then(function(results){
-        console.log(results);
+        //console.log(results);
         if (results.length > 1){
             res.render("index",{articles:results});
         } else {
@@ -72,12 +72,19 @@ db.Saved.remove({ _id: req.params.id },function(err) {
 
 router.post("/savenew", function(req, res) {
     console.log(req.body);
-db.Saved.create(req.body).then(function(dbArticle) {
-    res.json(dbArticle);
-    }).catch(function(err) {
-    res.json(err);
-    });
-});
+    db.Saved.find(req.body).then(function(data){
+        console.log(data);
+        if(data.length > 0){
+            return res.json(data);;
+        }
+        db.Saved.create(req.body).then(function(dbArticle) {
+            res.json(dbArticle);
+            }).catch(function(err) {
+            res.json(err);
+            });
+        });
+    })
+    
 
 router.get("/cleararticles", function(req,res){
     db.Article.remove({},function(data){
