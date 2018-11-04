@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var ArticleSchema = new Schema({
+var SavedSchema = new Schema({
   title: {
     type: String,
     required: true
@@ -14,5 +14,5 @@ var ArticleSchema = new Schema({
     ref: "Note"
   }
 });
-var Article = mongoose.model("Article", ArticleSchema);
-module.exports = Article;
+var Saved = mongoose.model("Saved", SavedSchema);
+module.exports = Saved;
