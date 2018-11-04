@@ -21,6 +21,7 @@ router.get("/", function(req,res){
 });
 router.get("/scrape", function(req, res) {
     axios.get("http://www.theonion.com/").then(function(response) {
+        var links = [];
       var $ = cheerio.load(response.data);
       $("header a").each(function(i, element) {
         var result = {};
@@ -28,9 +29,14 @@ router.get("/scrape", function(req, res) {
           .text();
         result.link = $(this)
           .attr("href");
+          //console.log(result);
+          if (result.link == "" || result.link == "#" || links.indexOf(result.link) != -1){
+              return;
+          }
+          links.push(result.link);
         db.Article.create(result)
           .then(function(dbArticle) {
-            console.log(dbArticle);
+            //console.log(dbArticle);
           })
           .catch(function(err) {
               console.log(err);
