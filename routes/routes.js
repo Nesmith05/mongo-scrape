@@ -4,6 +4,8 @@ var router = express.Router();
 var axios = require("axios");
 var cheerio = require("cheerio");
 
+router.get('/favicon.ico', function(req,res) { res.status(204)});
+
 router.get("/", function(req,res){
     db.Article.find({}).then(function(results){
         console.log(results);
