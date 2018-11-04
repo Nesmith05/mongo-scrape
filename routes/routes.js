@@ -24,7 +24,7 @@ router.get("/scrape", function(req, res) {
         var result = {};
         result.title = $(this)
           .text();
-        result.link = $(this)///'
+        result.link = $(this)
           .attr("href");
         db.Article.create(result)
           .then(function(dbArticle) {
@@ -32,44 +32,62 @@ router.get("/scrape", function(req, res) {
           })
           .catch(function(err) {
               console.log(err);
-            return res.json(err);
+            return res.redirect("/");
           });
       });
       res.redirect("/");
     });
   });
-  router.get("/articles", function(req, res) {
-    db.Article.find({})
-      .then(function(dbArticle) {
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        res.json(err);
-      });
-  });
-  
-  router.get("/articles/:id", function(req, res) {
-    db.Article.findOne({ _id: req.params.id })
-      .populate("note")
-      .then(function(dbArticle) {
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        res.json(err);
-      });
-  });
-  
-  router.post("/articles/:id", function(req, res) {
-    db.Note.create(req.body)
-      .then(function(dbNote) {
-        return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-      })
-      .then(function(dbArticle) {
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        res.json(err);
-      });
-  });
+router.get("/saved", function(req, res) {
+db.Saved.find({}).then(function(results) {
+    if (results.length > 1){
+        res.render("saved",{articles:results});
+    } else {
+        res.render("saved");
+    }
+    })
+    .catch(function(err) {
+    console.log(err)
+    res.render("saved");
+    });
+});
 
+router.get("/delete/:id", function(req, res) {
+db.Saved.remove({ _id: req.params.id },function(err) {
+    if (err) {
+        console.log(err);
+        return res.json({error:err.message});
+    }
+    res.json({complete:"complete"});
+    })
+});
+
+router.post("/savenew", function(req, res) {
+    console.log(req.body);
+db.Saved.create(req.body).then(function(dbArticle) {
+    res.json(dbArticle);
+    }).catch(function(err) {
+    res.json(err);
+    });
+});
+
+router.get("/cleararticles", function(req,res){
+    db.Article.remove({},function(data){
+        console.log(data);
+        res.redirect("/");
+    }).catch(function(err){
+        console.log(err);
+        res.json({error:err.message});
+    })
+});
+
+router.get("/clearsaved", function(req,res){
+    db.Saved.remove({},function(data){
+        console.log(data);
+        res.redirect("/saved");
+    }).catch(function(err){
+        console.log(err);
+        res.json({error:err.message});
+    })
+});
   module.exports = router;

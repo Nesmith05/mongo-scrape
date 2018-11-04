@@ -13,13 +13,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/saved">Saved Articles</a>
+        <a class="nav-link" href="/">Scrape Articles</a>
       </li>
       <li class="nav-item">
-        <a class="btn btn-danger scrape-new" href="/scrape">SCRAPE NEW ARTICLES!</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-danger clear" href="/cleararticles">CLEAR ARTICLES!</a>
+        <a class="btn btn-danger clear" href="/clearsaved">CLEAR SAVED ARTICLES!</a>
       </li>
     </ul>
   </div>
@@ -42,26 +39,18 @@
                 <div class="card-header">
                     <h3>
                         <a class="article-link" target="_blank" rel="noopenernoreferrer" href="{{link}}">{{title}}</a>
-                        <a class="btn btn-success save" id="{{_id}}" link="{{link}}" title="{{title}}">Save Article</a>
+                        <a class="btn btn-success delete" id="{{_id}}" link="{{link}}" title="{{title}}">Delete Article</a>
                     </h3>
                 </div>
             </div>
         {{/each}}
     {{else}}
         <div class='alert alert-warning text-center'>
-            <h4>Uh Oh. Looks like we don't have any new articles.</h4>
+            <h4>Uh Oh. Looks like we don't have any saved articles.</h4>
         </div>
         <div class="card">
-            <div class="card-header text-center">
-            <h3>What Would You Like To Do?</h3>
-            </div>
             <div class="card-body text-center">
-            <h4>
-                <a href="/scrape">Try Scraping New Articles</a>
-            </h4>
-            <h4>
-                <a href="/saved">Go to Saved Articles</a>
-            </h4>
+                <h4><a href="/">Try Scraping New Articles</a></h4>
             </div>
         </div>
     {{/if}}
@@ -76,4 +65,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-<script src="/assets/index.js"></script>
+<script src="/assets/saved.js"></script>
