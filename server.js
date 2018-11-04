@@ -11,6 +11,7 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+console.log(MONGODB_URI);
 mongoose.connect(MONGODB_URI);
 
 app.use(require("./routes/routes.js"));
